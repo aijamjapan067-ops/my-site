@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harbor Lab | 都市情報学研究室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #0b1224;
+      --glass: rgba(255,255,255,0.06);
+      --text: #e2e8f0;
+      --muted: #9ca7c7;
+      --accent: #7dd3fc;
+      --accent-strong: #22d3ee;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 15% 20%, rgba(34,211,238,0.08), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(125,211,252,0.12), transparent 40%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 24px 64px;
+      text-align: center;
+      background: linear-gradient(135deg, #0b1224 0%, #0f172a 60%, #0a162c 100%);
+    }
+    header::after, header::before {
+      content: '';
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(60px);
+      opacity: 0.3;
+    }
+    header::after {
+      width: 280px; height: 280px;
+      background: #22d3ee;
+      top: -80px; right: -60px;
+    }
+    header::before {
+      width: 220px; height: 220px;
+      background: #7dd3fc;
+      bottom: -70px; left: -50px;
+    }
+    .nav {
+      max-width: 1080px;
+      margin: 0 auto 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .brand .logo {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #22d3ee, #7dd3fc);
+      display: grid; place-items: center;
+      color: #0f172a;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .nav-links { display: flex; gap: 16px; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.08);
+      color: var(--accent);
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(32px, 5vw, 46px);
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      margin: 0 auto 28px;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .cta {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .btn {
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary { background: linear-gradient(135deg, #22d3ee, #7dd3fc); color: #0f172a; box-shadow: var(--shadow); }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-ghost { color: var(--text); background: rgba(255,255,255,0.04); }
+    .section {
+      max-width: 1080px;
+      margin: 64px auto;
+      padding: 0 24px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+    .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .badge { color: var(--accent); font-weight: 700; letter-spacing: 0.08em; font-size: 12px; text-transform: uppercase; }
+    h2 { margin: 6px 0 14px; font-size: 26px; letter-spacing: -0.01em; }
+    p { margin: 0 0 12px; color: var(--muted); }
+    .card {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(125,211,252,0.5); background: rgba(255,255,255,0.05); }
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px 24px 60px;
+      background: #0b1224;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 64px;
+    }
+    a { color: var(--accent-strong); }
+    @media (max-width: 640px) {
+      .nav { flex-direction: column; gap: 12px; }
+      .cta { flex-direction: column; }
+      header { padding: 56px 20px 52px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">HL</div>
+        <div>
+          <div>Harbor Laboratory</div>
+          <small style="color: var(--muted); font-weight: 600;">都市情報学研究室</small>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#research">研究テーマ</a>
+        <a href="#projects">プロジェクト</a>
+        <a href="#members">メンバー</a>
+        <a href="#contact">アクセス</a>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="pill">Urban Data · AI · Human Experience</div>
+      <h1>都市のデータを読み解き、体験をデザインする研究室</h1>
+      <p class="lead">都市スケールのデータ解析、AIによる人流予測、インタラクティブメディアを軸に、持続可能で豊かな都市体験を創る研究を行っています。</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#projects">最新プロジェクトを見る</a>
+        <a class="btn btn-ghost" href="#contact">見学・共同研究の相談</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="research" class="section">
+    <div class="panel">
+      <div class="badge">Research Focus</div>
+      <h2>研究テーマ</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <div class="tag">都市データ可視化</div>
+          <h3 style="margin: 4px 0 6px;">City Flow Intelligence</h3>
+          <p>センサデータとモビリティログから街の「流れ」をリアルタイムに可視化し、意思決定を支援します。</p>
+        </div>
+        <div class="card">
+          <div class="tag">AI・シミュレーション</div>
+          <h3 style="margin: 4px 0 6px;">Predictive Urban Twin</h3>
+          <p>深層学習とシミュレーションで人流・交通を予測し、イベントや災害時のプランニングに活用します。</p>
+        </div>
+        <div class="card">
+          <div class="tag">UX/メディア</div>
+          <h3 style="margin: 4px 0 6px;">Ambient Interfaces</h3>
+          <p>情報をやさしく届ける環境型インタフェースを探索し、都市と人の関係をデザインします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="panel">
+      <div class="badge">Projects</div>
+      <h2>進行中のプロジェクト</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3 style="margin: 0 0 8px;">HarborScope</h3>
+          <p>港湾エリアの人流・物流を統合ダッシュボードで監視する共同研究。AIによる需要予測とリアルタイム警告を実装中。</p>
+          <div>
+            <span class="tag">Python</span>
+            <span class="tag">D3.js</span>
+            <span class="tag">TimescaleDB</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 8px;">NightWalk</h3>
+          <p>夜間の歩行者安全を高める光環境デザイン。IoTセンサから得た明るさ・人流データをもとに適応照明を制御。</p>
+          <div>
+            <span class="tag">IoT</span>
+            <span class="tag">Edge AI</span>
+            <span class="tag">Lighting</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 8px;">Dialogue City</h3>
+          <p>市民参加型のデータ展示。大型サイネージとモバイルを連動させ、街の声をインタラクティブに反映。</p>
+          <div>
+            <span class="tag">Unity</span>
+            <span class="tag">WebSocket</span>
+            <span class="tag">Interaction</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 8px;">BlueLine</h3>
+          <p>海面上昇を可視化するAR体験。将来シナリオを現地で重ね合わせ、都市政策検討の材料に。</p>
+          <div>
+            <span class="tag">AR</span>
+            <span class="tag">Simulation</span>
+            <span class="tag">Climate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="members" class="section">
+    <div class="panel">
+      <div class="badge">Members</div>
+      <h2>メンバー</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3 style="margin: 0 0 6px;">佐伯 海斗 教授</h3>
+          <p>都市情報学、インタラクティブメディア。国際会議でBest Paper多数。</p>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 6px;">綾瀬 美月 准教授</h3>
+          <p>人間中心設計とデータビジュアライゼーション。市民協働プロジェクトを主導。</p>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 6px;">博士・修士・学部生</h3>
+          <p>AI、UX、ロボティクスを背景にした多様なメンバーが共同研究を推進。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="panel">
+      <div class="badge">Access</div>
+      <h2>アクセス・お問い合わせ</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3 style="margin: 0 0 6px;">所在地</h3>
+          <p>海浜大学 工学部3号館 9F</p>
+          <p>〒000-0000 神奈川県横浜市港北区 1-2-3</p>
+          <p>東急〇〇線「Harbor前」駅 徒歩5分</p>
+        </div>
+        <div class="card">
+          <h3 style="margin: 0 0 6px;">連絡</h3>
+          <p>研究室見学・共同研究のご相談はメールでお気軽にどうぞ。</p>
+          <a class="btn btn-primary" style="display:inline-flex; margin-top: 6px;" href="mailto:info@harborlab.ac.jp">メールで問い合わせる</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Harbor Laboratory, Urban Informatics Lab — since 2024
+  </footer>
+</body>
+</html>
